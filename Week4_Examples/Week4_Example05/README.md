@@ -1,19 +1,20 @@
 ## Project Title
 
-GBDA302 Week 4 Example 5: Blob Platformer (JSON + Classes)
+GBDA302 Week 4 Side Quest
 
 ---
 
 ## Authors
 
-Karen Cochrane and David Han
+Sofia Alejandra Black and Chat GPT
 
----
+## sa3black - 21063350
 
 ## Description
 
-This matches the structure of the original blob sketch from Week 2 but moves
-details into classes.
+This fills the requirments of the side quest "Generate a level using arrays or JSON data; use loops to dynamically place tiles, obstacles, or words."
+
+Builds directly off the given code example from class.
 
 ---
 
@@ -31,12 +32,14 @@ Learning Goals:
 
 ## Assets
 
-N/A
+OpenAI. ChatGPT. OpenAI, 2024, chatgpt.com
 
 ---
 
 ## GenAI
 
 The code was written by Dr. Karen Cochrane and David Han but they used GenAI to write the comments.
+
+This code was written by Chat GPT and prompted by Sofia Black
 
 ---
