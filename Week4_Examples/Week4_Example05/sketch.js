@@ -3,6 +3,8 @@ let levelIndex = 0;
 
 let world;
 let player;
+
+// Prevent repeated level reloads
 let advancing = false;
 
 function preload() {
@@ -23,22 +25,14 @@ function draw() {
   world.drawWorld();
 
   player.update(world.platforms);
-
-  // Spike collision
-  for (let h of world.hazards) {
-    if (playerHitsHazard(player, h)) {
-      loadLevel(levelIndex);
-      return;
-    }
-  }
-
   player.draw(world.theme.blob);
 
+  // HUD
   fill(0);
   text(world.name, 10, 18);
   text("Move: A/D or ←/→ • Jump: Space/W/↑", 10, 36);
 
-  // Auto advance
+  // ---- AUTO LEVEL ADVANCE (FIXED) ----
   if (!advancing && player.x > width - player.r) {
     advancing = true;
     const next = (levelIndex + 1) % data.levels.length;
@@ -55,19 +49,9 @@ function keyPressed() {
 function loadLevel(i) {
   levelIndex = i;
   advancing = false;
+
   world = new WorldLevel(data.levels[levelIndex]);
   resizeCanvas(640, 360);
-  player.spawnFromLevel(world);
-}
 
-function playerHitsHazard(player, hazard) {
-  return overlapAABB(
-    {
-      x: player.x - player.r,
-      y: player.y - player.r,
-      w: player.r * 2,
-      h: player.r * 2,
-    },
-    hazard.getAABB(),
-  );
+  player.spawnFromLevel(world);
 }
