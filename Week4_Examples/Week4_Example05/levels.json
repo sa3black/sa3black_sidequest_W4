@@ -24,6 +24,14 @@
           { "x": 300, "y": 204, "count": 2 },
           { "x": 440, "y": 144, "count": 4 }
         ]
+      },
+
+      "hazards": {
+        "type": "spikes",
+        "y": 312,
+        "count": 6,
+        "spacing": 80,
+        "startX": 160
       }
     },
 
@@ -50,6 +58,14 @@
           { "x": 200, "y": 200, "count": 3 },
           { "x": 360, "y": 140, "count": 4 }
         ]
+      },
+
+      "hazards": {
+        "type": "spikes",
+        "y": 312,
+        "count": 8,
+        "spacing": 60,
+        "startX": 80
       }
     }
   ]

@@ -1,19 +1,16 @@
-/*
-Week 4 — Example 5: Blob Platformer (JSON + Classes)
-Course: GBDA302
-*/
-
 let data;
 let levelIndex = 0;
 
 let world;
 let player;
+let advancing = false;
 
 function preload() {
   data = loadJSON("levels.json");
 }
 
 function setup() {
+  createCanvas(640, 360);
   player = new BlobPlayer();
   loadLevel(0);
 
@@ -23,20 +20,27 @@ function setup() {
 }
 
 function draw() {
-  // Draw world
   world.drawWorld();
 
-  // Update + draw player
   player.update(world.platforms);
+
+  // Spike collision
+  for (let h of world.hazards) {
+    if (playerHitsHazard(player, h)) {
+      loadLevel(levelIndex);
+      return;
+    }
+  }
+
   player.draw(world.theme.blob);
 
-  // HUD
   fill(0);
   text(world.name, 10, 18);
   text("Move: A/D or ←/→ • Jump: Space/W/↑", 10, 36);
 
-  // -------- AUTO LEVEL PROGRESSION --------
-  if (player.pos.x > width - 20) {
+  // Auto advance
+  if (!advancing && player.x > width - player.r) {
+    advancing = true;
     const next = (levelIndex + 1) % data.levels.length;
     loadLevel(next);
   }
@@ -50,11 +54,20 @@ function keyPressed() {
 
 function loadLevel(i) {
   levelIndex = i;
+  advancing = false;
   world = new WorldLevel(data.levels[levelIndex]);
-
-  const W = world.inferWidth(640);
-  const H = world.inferHeight(360);
-  resizeCanvas(W, H);
-
+  resizeCanvas(640, 360);
   player.spawnFromLevel(world);
+}
+
+function playerHitsHazard(player, hazard) {
+  return overlapAABB(
+    {
+      x: player.x - player.r,
+      y: player.y - player.r,
+      w: player.r * 2,
+      h: player.r * 2,
+    },
+    hazard.getAABB(),
+  );
 }
